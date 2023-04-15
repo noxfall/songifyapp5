@@ -31,7 +31,7 @@ export const fetchLyrics = createAsyncThunk(
     try {
       const res = await fetch(`${baseUrl}track.lyrics.get&commontrack_id=${query}&apikey=${apiKey}`);
       const data = await res.json();
-      return data.message.body;
+      return data.message.body.lyrics;
     } catch (err) {
       callback.rejectWithValue({ error: err.message });
     }
