@@ -21,7 +21,6 @@ export const fetchSong = createAsyncThunk(
     try {
       const res = await fetch(`${baseUrl}?term=${query}`, options);
       const data = await res.json();
-      console.log(data.tracks.items[0].permalink);
       return data.tracks.items[0].permalink;
     } catch (err) {
       callback.rejectWithValue({ error: err.message });

@@ -2,11 +2,13 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import ReactPlayer from 'react-player';
+import { AiOutlineStar, AiFillStar } from 'react-icons/ai';
 
 import { fetchSelected } from '../utils/redux/search';
 import { fetchGifs } from '../utils/redux/gif';
 import { fetchLyricsID, fetchLyrics } from '../utils/redux/lyrics';
 import { fetchSong } from '../utils/redux/song';
+import { addFav, delFav } from '../utils/redux/favorites';
 
 const Track = () => {
   const dispatch = useDispatch();
@@ -18,6 +20,7 @@ const Track = () => {
   const { lyrics } = useSelector((state) => state.lyrics);
   const [commonWord, setCommonWord] = useState('');
   const { song } = useSelector((state) => state.song);
+  const { favorites } = useSelector((state) => state.favorites);
 
   useEffect(() => {
     search.selected.length && dispatch(fetchSelected(id));
@@ -44,8 +47,6 @@ const Track = () => {
     clearTimeout();
   }, [gifs, currGif]);
 
-
-
   useEffect(() => {
     const wordList = lyrics?.lyrics_body?.substring(0, lyrics.lyrics_body.length - 57).split(' ');
     let mf = 1;
@@ -62,6 +63,19 @@ const Track = () => {
     }
     console.log(commonWord);
   }, [lyrics, lyricsID]);
+
+  const handleAddFav = (i) => {
+    dispatch(addFav(i));
+    const favorites = JSON.parse(localStorage.getItem('favorites'));
+    favorites ? localStorage.setItem('faavorites', JSON.stringify([...favorites, i])) : localStorage.setItem('favorites', JSON.stringify([i]));
+  };
+
+  const handleDelFav = (i) => {
+    dispatch(delFav(i));
+    const favorites = JSON.parse(localStorage.getItem('favorites'));
+    const updateFavorites = favorites.filter((fav) => fav.name !== i.name);
+    localStorage.setItem('favorites', JSON.stringify(updateFavorites));
+  };
 
   return (
     <section className="flex sm:flex-row flex-col justify-center items-center h-screen">
@@ -80,7 +94,22 @@ const Track = () => {
             )}
           </figure>
           <figure className="flex justify-start flex-col w-full border-l-2 h-[360px] sm:px-10 px-2">
-            <h1>{search.selected.name}</h1>
+            <div className="flex justify-start border-b-[1px] mb-2 items-center">
+              <h1>{search.selected.name}</h1>
+              <span className="px-20">
+                {favorites.find((i) => i.name === search.selected.name) ? (
+                  <AiFillStar
+                    size={32}
+                    onClick={() => handleDelFav(search.selected)}
+                  />
+                ) : (
+                  <AiOutlineStar
+                    size={32}
+                    onClick={() => handleAddFav(search.selected)}
+                  />
+                )}
+              </span>
+            </div>
             <ReactPlayer url={song} playing loop />
             <h4>Artist: {search.selected.artist}</h4>
             <h4>Listeners: {search.selected.listeners}</h4>
