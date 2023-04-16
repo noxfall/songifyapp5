@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { Input } from '@material-tailwind/react';
 
 import { fetchResults, select } from '../utils/redux/search';
 
@@ -22,10 +23,11 @@ const Home = () => {
   return (
     <section className="flex flex-col sm:justify-center justify-start items-center h-screen">
       <div className="sm:w-[360px] w-full">
-        <input
+        <Input
           type="text"
           placeholder="Search..."
-          className="h-[36px] p-5 text-[24px] w-full min-w-[360px]"
+          variant="standard"
+          className="h-[36px] text-[26px] w-full min-w-[360px]"
           onChange={(e) => setSearchTerm(e.target.value)}
         />
         {searchTerm && (
@@ -35,10 +37,10 @@ const Home = () => {
                 {results.track.map((item, index) => (
                   <div
                     key={index}
-                    className="hover:bg-gray-600 cursor-pointer sm:p-4 p-4 sm:text-[14px] text-[18px]"
+                    className="transition ease-in-out duration-300 hover:bg-indigo-300 cursor-pointer py-4 px-2 rounded-lg sm:text-[18px] text-[18px]"
                     onClick={() => handleClick(item)}
                   >
-                    {item.name} by {item.artist}
+                    {item.name} by <span className="font-bold text-[#A70984]">{item.artist}</span>
                   </div>
                 ))}
               </div>

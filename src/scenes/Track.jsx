@@ -78,11 +78,12 @@ const Track = () => {
   };
 
   return (
-    <section className="flex sm:flex-row flex-col justify-center items-center h-screen">
+    <section className="flex sm:flex-row flex-col justify-center h-screen">
       {search.selected && (
         <article className="flex sm:flex-row flex-col justify-center items-center w-full">
           <figure className="flex flex-col justify-center items-center w-full">
-            <h4 className="text-[24px]">Most Common Word: <span className="text-[purple] font-bold">{commonWord}</span></h4>
+            <h4 className="text-[24px]">Keywords:
+              <span className="text-[purple] font-bold"> {commonWord} | {search.selected.name} | {search.selected.artist}</span></h4>
             {gifs.gifs.length ? (
               <img
                 src={gifs.gifs[currGif]?.images?.downsized.url}
@@ -93,17 +94,19 @@ const Track = () => {
               <div>Loading...</div>
             )}
           </figure>
-          <figure className="flex justify-start flex-col w-full border-l-2 h-[360px] sm:px-10 px-2">
-            <div className="flex justify-start border-b-[1px] mb-2 items-center">
-              <h1>{search.selected.name}</h1>
+          <figure className="flex justify-start flex-col w-full border-l-[1px] border-[cyan] h-[360px] sm:px-10 px-2">
+            <div className="flex justify-start border-b-[1px] border-[cyan] mb-2 items-center">
+              <h1 className="text-[#A70984]">{search.selected.name}</h1>
               <span className="px-20">
                 {favorites.find((i) => i.name === search.selected.name) ? (
                   <AiFillStar
+                    className="transition ease-in-out duration-300 text-[cyan] hover:text-white cursor-pointer"
                     size={32}
                     onClick={() => handleDelFav(search.selected)}
                   />
                 ) : (
                   <AiOutlineStar
+                    className="transition ease-in-out duration-300 text-[white] hover:text-[cyan] cursor-pointer"
                     size={32}
                     onClick={() => handleAddFav(search.selected)}
                   />
@@ -111,11 +114,11 @@ const Track = () => {
               </span>
             </div>
             <ReactPlayer url={song} playing loop />
-            <h4>Artist: {search.selected.artist}</h4>
-            <h4>Listeners: {search.selected.listeners}</h4>
-            <h4><a href={search.selected.url} target="_blank">LastFM</a></h4>
-            <h4>Lyrics </h4>
-            <p className="w-[320px]">{lyrics?.lyrics_body}</p>
+            <h4 className="py-2">Artist: <strong>{search.selected.artist}</strong></h4>
+            <h4 className="py-1">Listeners: <strong>{search.selected.listeners}</strong></h4>
+            <h4 className="py-1"><a href={search.selected.url} target="_blank">LastFM</a></h4>
+            <h4 className="text-[18px] text-[cyan] border-b-[1px] border-[#A70984] w-[360px]">Lyrics </h4>
+            <p className="w-[320px] py-2">{lyrics?.lyrics_body}</p>
 
           </figure>
         </article>

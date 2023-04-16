@@ -1,20 +1,13 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { AiOutlineStar, AiFillStar } from 'react-icons/ai';
+import { AiFillStar } from 'react-icons/ai';
 
-import { addFav, delFav } from '../utils/redux/favorites';
+import { delFav } from '../utils/redux/favorites';
 
 const Favorites = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { favorites } = useSelector((state) => state.favorites);
-
-  const handleAddFav = (i) => {
-    dispatch(addFav(i));
-    const favorites = JSON.parse(localStorage.getItem('favorites'));
-
-    favorites ? localStorage.setItem('favorites', JSON.stringify([...favorites, i])) : localStorage.setItem('favorites', JSON.stringify([i]));
-  };
 
   const handleDelFav = (i) => {
     dispatch(delFav(i));
@@ -24,16 +17,21 @@ const Favorites = () => {
   };
 
   return (
-    <section className="mt-10">
+    <section className="flex mt-20 p-5 gap-2">
       {favorites?.map((item, index) => (
         <div
           key={index}
-          className="flex p-10 text-[16px] justify-start items-center cursor-pointer"
+          className="transition ease-in-out duration-300 rounded-lg flex p-5 text-[16px] justify-start items-center cursor-pointer hover:bg-indigo-600"
         >
-          <p onClick={() => navigate(`/track/${item.name}`)} className="px-16 text-[24px]">{item.name} by {item.artist}</p>
+          <p onClick={() => navigate(`/track/${item.name}`)} className="px-5 text-[24px] font-bold">
+            <div className="flex items-center justify-between w-[280px] border-b-2">
+              {item.name}
+            </div>
+            <div className="font-normal text-[16px] text-[violet]">{item.artist}</div>
+          </p>
           <span>
             {favorites.find((i) => i.name === item.name) && (
-              <AiFillStar onClick={() => handleDelFav(item)} size={24} />
+              <AiFillStar onClick={() => handleDelFav(item)} size={24} className="transition ease-in-out duration-300 text-[cyan] hover:text-white" />
             )}
           </span>
         </div>
