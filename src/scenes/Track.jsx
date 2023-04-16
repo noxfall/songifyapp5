@@ -78,7 +78,7 @@ const Track = () => {
   };
 
   return (
-    <section className="flex sm:flex-row flex-col justify-center h-screen">
+    <section className="flex sm:flex-row flex-col pt-10 justify-center h-screen">
       {search.selected && (
         <article className="flex sm:flex-row flex-col justify-center items-center w-full">
           <figure className="flex flex-col justify-center items-center w-full">
@@ -94,8 +94,8 @@ const Track = () => {
               <div>Loading...</div>
             )}
           </figure>
-          <figure className="flex justify-start flex-col w-full border-l-[1px] border-[cyan] h-[360px] sm:px-10 px-2">
-            <div className="flex justify-start border-b-[1px] border-[cyan] mb-2 items-center">
+          <figure className="flex justify-start flex-col w-full h-[360px] sm:px-10 px-2 pt-10 h-[800px] overflow-auto">
+            <div className="flex justify-between border-b-[1px] border-[cyan] mb-2 items-center w-[640px]">
               <h1 className="text-[#A70984]">{search.selected.name}</h1>
               <span className="px-20">
                 {favorites.find((i) => i.name === search.selected.name) ? (
@@ -114,8 +114,8 @@ const Track = () => {
               </span>
             </div>
             <ReactPlayer url={song} playing loop />
-            <h4 className="py-2">Artist: <strong>{search.selected.artist}</strong></h4>
-            <h4 className="py-1">Listeners: <strong>{search.selected.listeners}</strong></h4>
+            <h4 className="py-2 text-[violet]">Artist: <strong>{search.selected.artist}</strong></h4>
+            <h4 className="py-1 text-[violet]">Listeners: <strong>{search.selected.listeners}</strong></h4>
             <h4 className="py-1"><a href={search.selected.url} target="_blank">LastFM</a></h4>
             <h4 className="text-[18px] text-[cyan] border-b-[1px] border-[#A70984] w-[360px]">Lyrics </h4>
             <p className="w-[320px] py-2">{lyrics?.lyrics_body}</p>
