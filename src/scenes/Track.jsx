@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import ReactPlayer from 'react-player';
 
 import { fetchSelected } from '../utils/redux/search';
 import { fetchGifs } from '../utils/redux/gif';
 import { fetchLyricsID, fetchLyrics } from '../utils/redux/lyrics';
+import { fetchSong } from '../utils/redux/song';
 
 const Track = () => {
   const dispatch = useDispatch();
@@ -15,6 +17,7 @@ const Track = () => {
   const { lyricsID } = useSelector((state) => state.lyrics);
   const { lyrics } = useSelector((state) => state.lyrics);
   const [commonWord, setCommonWord] = useState('');
+  const { song } = useSelector((state) => state.song);
 
   useEffect(() => {
     search.selected.length && dispatch(fetchSelected(id));
@@ -25,6 +28,7 @@ const Track = () => {
     if (Object.keys(search.selected).length) {
       dispatch(fetchGifs(search.selected.name + ' ' + commonWord));
       dispatch(fetchLyricsID(search.selected.name + '+' + search.selected.artist));
+      dispatch(fetchSong(search.selected.name));
     }
 
   }, [search.selected]);
@@ -43,7 +47,7 @@ const Track = () => {
 
 
   useEffect(() => {
-    const wordList = lyrics?.lyrics_body?.substring(0, lyrics?.lyrics_body.length - 57).split(' ');
+    const wordList = lyrics?.lyrics_body?.substring(0, lyrics.lyrics_body.length - 57).split(' ');
     let mf = 1;
     let m = 0;
     for (let i in wordList) {
@@ -57,10 +61,10 @@ const Track = () => {
       m = 0;
     }
     console.log(commonWord);
-  }, [lyrics, lyricsID])
+  }, [lyrics, lyricsID]);
 
   return (
-    <section className="flex justify-center items-center h-screen">
+    <section className="flex sm:flex-row flex-col justify-center items-center h-screen">
       {search.selected && (
         <article className="flex sm:flex-row flex-col justify-center items-center w-full">
           <figure className="flex flex-col justify-center items-center w-full">
@@ -69,18 +73,21 @@ const Track = () => {
               <img
                 src={gifs.gifs[currGif]?.images?.downsized.url}
                 alt="gif"
-                className="w-[360px] h-[360px] object-contain"
+                className="sm:w-[480px] w-full h-[400px] object-contain"
               />
             ) : (
               <div>Loading...</div>
             )}
           </figure>
-          <figure className="flex justify-start flex-col w-full border-l-2 h-[360px] px-10">
+          <figure className="flex justify-start flex-col w-full border-l-2 h-[360px] sm:px-10 px-2">
             <h1>{search.selected.name}</h1>
+            <ReactPlayer url={song} playing loop />
             <h4>Artist: {search.selected.artist}</h4>
             <h4>Listeners: {search.selected.listeners}</h4>
             <h4><a href={search.selected.url} target="_blank">LastFM</a></h4>
-            <p>{lyrics?.lyrics_body}</p>
+            <h4>Lyrics </h4>
+            <p className="w-[320px]">{lyrics?.lyrics_body}</p>
+
           </figure>
         </article>
       )}

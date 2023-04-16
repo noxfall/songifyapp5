@@ -20,8 +20,8 @@ const Home = () => {
   };
 
   return (
-    <section className="flex flex-col justify-center items-center h-screen">
-      <div className="w-[360px]">
+    <section className="flex flex-col sm:justify-center justify-start items-center h-screen">
+      <div className="sm:w-[360px] w-full">
         <input
           type="text"
           placeholder="Search..."
@@ -35,15 +35,15 @@ const Home = () => {
                 {results.track.map((item, index) => (
                   <div
                     key={index}
-                    className="hover:bg-gray-300 cursor-pointer"
+                    className="hover:bg-gray-600 cursor-pointer sm:p-4 p-4 sm:text-[14px] text-[18px]"
                     onClick={() => handleClick(item)}
                   >
-                    {item.name}
+                    {item.name} by {item.artist}
                   </div>
                 ))}
               </div>
             ) : (
-              <div><p>Track not found...</p></div>
+              <div>Track not found...</div>
             )}
           </div>
         )}
