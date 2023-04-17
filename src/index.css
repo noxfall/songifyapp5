@@ -47,6 +47,7 @@ nav {
   color: var(--light-text);
 }
 
+
 section {
   background-color: var(--light-background);
 }
@@ -72,7 +73,7 @@ section {
 
 a {
   font-weight: 500;
-  color: #646cff;
+  color: var(--accent);
   text-decoration: inherit;
 }
 a:hover {

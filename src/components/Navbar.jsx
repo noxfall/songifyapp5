@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FiSun } from 'react-icons/fi';
 import { FaMoon } from 'react-icons/fa';
-import { setMode, keepMode } from '../utils/theme';
+import { setMode } from '../utils/theme';
 
 const Navbar = () => {
   const [darkMode, setDarkMode] = useState('dark')
@@ -39,7 +39,7 @@ const Navbar = () => {
       </ul>
       <p className="p-4">
         <span className="cursor-pointer">
-          {darkMode ? (
+          {darkMode === 'dark' ? (
             <FiSun
               size={24}
               onClick={handleClick}
