@@ -21,7 +21,7 @@ const Home = () => {
   };
 
   return (
-    <section className="flex flex-col sm:justify-center justify-start items-center h-screen">
+    <section className={`flex flex-col sm:justify-center justify-start items-center h-screen`}>
       <div className="sm:w-[360px] w-full">
         <Input
           type="text"

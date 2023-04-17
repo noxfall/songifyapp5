@@ -17,7 +17,7 @@ const Favorites = () => {
   };
 
   return (
-    <section className="flex sm:flex-row flex-col mt-20 p-5 gap-2">
+    <section className="flex sm:flex-row flex-col sm:mt-0 mt-20 p-5 gap-2 h-screen">
       {favorites?.map((item, index) => (
         <div
           key={index}

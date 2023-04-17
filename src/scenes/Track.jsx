@@ -24,7 +24,6 @@ const Track = () => {
 
   useEffect(() => {
     search.selected.length && dispatch(fetchSelected(id));
-
   }, []);
 
   useEffect(() => {
@@ -67,7 +66,7 @@ const Track = () => {
   const handleAddFav = (i) => {
     dispatch(addFav(i));
     const favorites = JSON.parse(localStorage.getItem('favorites'));
-    favorites ? localStorage.setItem('faavorites', JSON.stringify([...favorites, i])) : localStorage.setItem('favorites', JSON.stringify([i]));
+    favorites ? localStorage.setItem('favorites', JSON.stringify([...favorites, i])) : localStorage.setItem('favorites', JSON.stringify([i]));
   };
 
   const handleDelFav = (i) => {
@@ -83,7 +82,8 @@ const Track = () => {
         <article className="flex sm:flex-row flex-col justify-center items-center w-full">
           <figure className="flex flex-col justify-center items-center w-full">
             <h4 className="text-[24px]">Keywords:
-              <span className="text-[purple] font-bold"> {commonWord} | {search.selected.name} | {search.selected.artist}</span></h4>
+              <span className="text-[purple] font-bold"> {commonWord} | {search.selected.name} | {search.selected.artist}</span>
+            </h4>
             {gifs.gifs.length ? (
               <img
                 src={gifs.gifs[currGif]?.images?.downsized.url}

@@ -1,4 +1,6 @@
+import { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
+import { keepMode } from './utils/theme';
 
 import Home from "./scenes/Home";
 import Track from './scenes/Track';
@@ -6,6 +8,11 @@ import Favorites from './scenes/Favorites';
 import Navbar from './components/Navbar';
 
 const App = () => {
+
+  useEffect(() => {
+    keepMode();
+  })
+
   return (
     <main className="app">
       <Navbar />

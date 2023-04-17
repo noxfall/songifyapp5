@@ -12,6 +12,6 @@ export const store = configureStore({
     gif: gifReducer,
     lyrics: lyricsReducer,
     song: songReducer,
-    favorites: favoriteReducer
+    favorites: favoriteReducer,
   }
 });
